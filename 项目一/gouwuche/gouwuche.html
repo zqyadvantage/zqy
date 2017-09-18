@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" href="../bootstrap.css">
+  <style>
+    .mt{
+      margin-top: 15px;
+    }
+    li{
+      list-style: none;
+    }
+    a:link{
+      text-decoration: none;
+    }
+  </style>
+  <script src="../jquery.js"></script>
+  <script src="../bootstrap.js"></script>
+  <script>
+    $(function(){
+
+      $('[data-toggle=hover]').parent().hover(function () {
+        $(this).toggleClass('open');
+      }, function () {
+        $(this).toggleClass('open');
+      })
+
+      $('table').load('index.html');
+
+      $('footer').load('../main/footer.html')
+    })
+  </script>
+</head>
+<body>
+<div class="container mt">
+  <div class="row">
+    <div class="col-xs-1"><img src="../login/img/mi.png" alt=""></div>
+    <div class="col-xs-8 mt" style="font-size: 30px">我的购物车 <span style="font-size: 15px;color: #9d9d9d">温馨提示：产品是否购买成功，以最终下单为准哦，请尽快结算</span></div>
+  <div class="col-xs-2 mt dropdown"><a href="#"  class="dropdown-toggle" data-toggle="hover">个人中心
+  <span class="caret"></span>
+  </a>
+<div class="dropdown-menu">
+<ul class="container-fluid">
+  <li><a href="">个人中心</a></li>
+  <li><a href="">评价晒单</a></li>
+  <li><a href="">我的喜欢</a></li>
+  <li><a href="../login/miaomizhanghao.html">小米账户</a></li>
+  <li><a href="../main/02.html">退出登录</a></li>
+</ul>
+</div>
+  </div>
+    <div class="col-xs-1 mt"><a href="">我的订单</a></div>
+  </div>
+  </div>
+<div style="width: 100%;margin-top: 30px;border-bottom: 3px solid rgb(245,104,0)"></div>
+<div class="container mt">
+  <table>
+  </table>
+  <footer>
+  </footer>
+</div>
+</body>
+</html>

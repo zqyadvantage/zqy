@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" href="../bootstrap.css" type="text/css">
+  <style>
+    .site-ad-bar {
+      background: url("img/10.jpg") no-repeat center;
+      height: 100px;
+      padding: 0px;
+    }
+
+    .logo {
+      background: url("img/mi-logo.png") no-repeat center;
+      height: 49px;
+    }
+
+    .font {
+      font-size: 20px;
+    }
+
+    .left1 {
+      background-color: rgba(0,0,0,0.5);
+      color: white;
+      padding: 13.45px 30px;
+    }
+
+
+    .bg-hui {
+      background-color: #9A9B8B;
+      font-size: 15px;
+      text-align: center;
+      color: black;
+      padding: 10px;
+    }
+
+    .cart {
+      max-height: 400px;
+      width: 400px;
+      overflow-y: auto;
+    }
+
+    .nav-item{
+      padding: 15px;
+      cursor: pointer;
+    }
+
+    ul li{
+      list-style: none;
+    }
+    a:link{
+      text-decoration: none;
+    }
+    .nav-collapse{
+      float: left;
+      margin: 30px;
+    }
+    .img-thumbnail{
+      width: 200px;
+    }
+    .tab-content p,p span{
+      color: red;
+    }
+    .text-hui{
+      color: #9d9d9d;
+    }
+    .carousel-inner p{
+      color: #9d9d9d ;
+      font-size: 10px;
+      width: 180px;
+      margin-left: 20px;
+    }
+  </style>
+  <style>
+    .logo {
+      background: url("../main/img/mi-logo.png") no-repeat center;
+      height: 49px;
+    }
+
+    .font {
+      font-size: 20px;
+    }
+
+    .cart {
+      max-height: 400px;
+      width: 400px;
+      overflow-y: auto;
+    }
+
+    .nav-item{
+      padding: 15px;
+      cursor: pointer;
+    }
+
+    ul li{
+      list-style: none;
+    }
+
+    .quchu{
+      padding: 0;
+    }
+   /* .nav-collapse{
+      float: left;
+      margin: 30px;
+    }*/
+   /* .img-thumbnail{
+      width: 200px;
+    }*/
+   /* .tab-content p,p span{
+      color: red;
+    }*/
+    /*.carousel-inner p{
+      color: #9d9d9d ;
+      font-size: 10px;
+      width: 180px;
+      margin-left: 20px;
+    }*/
+  </style>
+  <script src="../jquery.js"></script>
+  <script src="../bootstrap.js"></script>
+  <script src="../js/dfrz-store.js"></script>
+  <script>
+    /*页面初始化*/
+    var user = store.get('user',{});
+    function chushihua(){
+      var html1='';
+      var html2='';
+      if(user.isLogin==true){
+        html1+='<a href="#" class="dropdown-toggle" data-toggle="hover">'+user.username+'</a>'+
+        '<div class="dropdown-menu "><ul><li><a href="../gerenzhongxin/gerenzhongxin.html">个人中心</a></li>'+
+          '<li><a href="">评价晒单</a></li><li><a href="">我的喜欢</a></li><li><a href="../login/miaomizhanghao.html">' +
+          '小米账户</a></li><li><a id="exit" href="../main/02.html">退出登录</a></li></ul></div>';
+        html2+='<a href="#">我的订单</a>';
+        $('#one').html(html1);
+        $('#two').html(html2);
+      }else {
+        html1+='<a href="../login/login.html">登录</a>';
+        html2+='<a href="../zhuce/01.html">注册</a>';
+        $('#one').html(html1);
+        $('#two').html(html2);
+      }
+    }
+    $(function () {
+      chushihua();
+      /*下拉菜单*/
+      $('[data-toggle=hover]').parent().hover(function () {
+        $(this).toggleClass('open');
+      }, function () {
+        $(this).toggleClass('open');
+      })
+
+      var enterTimeout=[],leaveTimeout = [];
+      $(document).off('click.bs.collapse.data-api','[data-toggle="collapse"]');
+      $('[data-collapse-trigger=hover],.collapse').hover(function () {
+        var i=$(this);
+        var index =Number(i.data('id'));
+        clearTimeout(leaveTimeout[index]);
+        clearTimeout(enterTimeout[index]);
+        enterTimeout[index]=setTimeout(function(){
+          var target = i.data('target');
+          $(target).collapse('show');
+        },350);
+        //$(this).trigger('click');
+
+      },function(){
+        var i=$(this);
+        var index =Number(i.data('id'));
+        clearTimeout(enterTimeout[index]);
+        clearTimeout(leaveTimeout[index]);
+        leaveTimeout[index]=setTimeout(function(){
+          var target = i.data('target');
+          $(target).collapse('hide');
+        },350);
+      })
+
+      $('#exit').on('click',function(){
+        localStorage.clear();
+      })
+    })
+
+
+
+
+  </script>
+</head>
+<body>
+<!--导航条-->
+<nav class="navbar navbar-inverse navbar-static-top">
+  <div class="container">
+    <ul class="nav navbar-nav">
+      <li><a href="../main/02.html">小米商城</a></li>
+      <li><a href="#">MIUI</a></li>
+      <li><a href="#">米聊</a></li>
+      <li><a href="#">游戏</a></li>
+      <li><a href="#">云服务</a></li>
+      <li><a href="#">金融</a></li>
+      <li><a href="#">小米商城手机版</a></li>
+      <li><a href="#">问题反馈</a></li>
+      <li><a href="#">Select Region</a></li>
+    </ul>
+
+    <ul class="nav navbar-nav navbar-right">
+      <li class=" dropdown" id="one"></li>
+      <li id="two"></li>
+      <li><a href="">消息通知</a></li>
+      <li class=" dropdown"><a href="../gouwuche/gouwuche.html" class="dropdown-toggle" data-toggle="hover">购物车</a>
+        <div class="dropdown-menu dropdown-menu-right cart">
+          <ul class="container-fluid" style="list-style: none">
+            <li>
+              <div class="row">
+                <div class="col-xs-5"><img src="../main/img/xiaomi6.jpg" class="img-thumbnail" alt=""></div>
+                <div class="col-xs-4">小米6</div>
+                <div class="col-xs-3 text-danger">￥2499</div>
+              </div>
+            </li>
+            <li class="divider"></li>
+            <li>
+              <div class="row">
+                <div class="col-xs-5"><img src="../main/img/xiaomi6.jpg" class="img-thumbnail" alt=""></div>
+                <div class="col-xs-4">小米6</div>
+                <div class="col-xs-3 text-danger">￥2499</div>
+              </div>
+            </li>
+            <li class="divider"></li>
+            <li>
+              <div class="row">
+                <div class="col-xs-5"><img src="../main/img/xiaomi6.jpg" class="img-thumbnail" alt=""></div>
+                <div class="col-xs-4">小米6</div>
+                <div class="col-xs-3 text-danger">￥2499</div>
+              </div>
+            </li>
+            <li class="divider"></li>
+            <li>
+              <div class="row">
+                <div class="col-xs-5"><img src="../main/img/xiaomi6.jpg" class="img-thumbnail" alt=""></div>
+                <div class="col-xs-4">小米6</div>
+                <div class="col-xs-3 text-danger">￥2499</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+<!--导航栏-->
+<nav class="navbar text-center " id="nav">
+  <!--///////////////---collapse---//////////////////-->
+  <div class="collapse bg-info" data-id="0" data-target="#menu1" id="menu1" style="width:100%;position:absolute;right:0;top:50px; z-index: 10;">
+    <ul>
+      <li class="nav-collapse"><img src="../main/img/xiaomi.png" class="img-thumbnail" alt="">
+        <p>小米</p>￥2499
+      </li>
+      <li class="nav-collapse"><img src="../main/img/xiaomi4.jpg" class="img-thumbnail" alt="">
+        <p>小米</p>￥2499
+      </li>
+      <li class="nav-collapse"><img src="../main/img/xiaomi3.jpg" class="img-thumbnail" alt="">
+        <p>小米</p>￥2499
+      </li>
+    </ul>
+  </div>
+  <div class="collapse bg-info" data-id="1" data-target="#menu2" id="menu2" style="width: 100%;position:absolute;right: 0;top:50px; z-index: 10">
+    <ul >
+      <li class="nav-collapse"><img src="../main/img/hongmi.jpg" class="img-thumbnail" alt="">
+        <p>红米</p>￥1899
+      </li>
+      <li class="nav-collapse"><img src="../main/img/hongmi2.png" class="img-thumbnail" alt="">
+        <p>红米</p>￥1899
+      </li>
+      <li class="nav-collapse"><img src="../main/img/hongmi3.jpg" class="img-thumbnail" alt="">
+        <p>红米</p>￥1899
+      </li>
+    </ul>
+  </div>
+  <div class="collapse bg-info" data-id="2" data-target="#menu3" id="menu3" style="width: 100%;position:absolute;right: 0;top:50px; z-index: 10">
+    <ul>
+      <li class="nav-collapse"><img src="../main/img/pingban2.png" class="img-thumbnail" alt="">
+        <p>平板</p>￥4499
+      </li>
+      <li class="nav-collapse"><img src="../main/img/pingban.jpg" class="img-thumbnail" alt="">
+        <p>平板</p>￥4499
+      </li>
+      <li class="nav-collapse"><img src="../main/img/pingban.jpg" class="img-thumbnail" alt="">
+        <p>平板</p>￥4499
+      </li>
+    </ul>
+  </div>
+  <div class="collapse bg-info" data-id="3" data-target="#menu4" id="menu4" style="width: 100%;position:absolute;right: 0;top:50px; z-index: 10">
+    <ul>
+      <li class="nav-collapse"><img src="../main/img/dianshi2.png" class="img-thumbnail" alt="">
+        <p>电视</p>￥4499
+      </li>
+      <li class="nav-collapse"><img src="../main/img/dianshi3.png" class="img-thumbnail" alt="">
+        <p>电视</p>￥4499
+      </li>
+      <li class="nav-collapse"><img src="../main/img/dianshi4.png" class="img-thumbnail" alt="">
+        <p>电视</p>￥4499
+      </li>
+    </ul>
+  </div>
+  <div class="collapse bg-info" data-id="4" data-target="#menu5" id="menu5" style="width: 100%;position:absolute;right: 0;top:50px; z-index: 10">
+    <ul>
+      <li class="nav-collapse"><img src="../main/img/hezi1.png" class="img-thumbnail" alt="">
+        <p>盒子</p>￥4499
+      </li>
+      <li class="nav-collapse"><img src="../main/img/hezi2.png" class="img-thumbnail" alt="">
+        <p>盒子</p>￥4499
+      </li>
+      <li class="nav-collapse"><img src="../main/img/hezi3.jpg" class="img-thumbnail" alt="">
+        <p>盒子</p>￥4499
+      </li>
+      <li class="nav-collapse"><img src="../main/img/hezi4.png" class="img-thumbnail" alt="">
+        <p>盒子</p>￥4499
+      </li>
+    </ul>
+  </div>
+
+  <!--//////////////////////////////////////////-->
+
+  <div class="container" style="position: relative">
+    <!--////////////////collapse////////////////////////-->
+    <div class="collapse bg-success col-xs-9" id="menu01" style="position:absolute; right: 0;top:70px;z-index: 10">
+      <div class="row">
+        <div class="col-xs-4"><img src="../main/img/hongmi.jpg" class="img-thumbnail" alt="">
+          <p>红米</p>
+          <p class="text-danger">选购</p>
+        </div>
+        <div class="col-xs-4"><img src="../main/img/hongmi.jpg" class="img-thumbnail" alt="">
+          <p>红米</p>
+          <p class="text-danger">选购</p>
+        </div>
+        <div class="col-xs-4"><img src="../main/img/hongmi.jpg" class="img-thumbnail" alt="">
+          <p>红米</p>
+          <p class="text-danger">选购</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-4"><img src="../main/img/hongmi.jpg" class="img-thumbnail" alt="">
+          <p>红米</p>
+          <p class="text-danger">选购</p>
+        </div>
+        <div class="col-xs-4"><img src="../main/img/hongmi.jpg" class="img-thumbnail" alt="">
+          <p>红米</p>
+          <p class="text-danger">选购</p>
+        </div>
+        <div class="col-xs-4"><img src="../main/img/hongmi.jpg" class="img-thumbnail" alt="">
+          <p>红米</p>
+          <p class="text-danger">选购</p>
+        </div>
+      </div>
+    </div>
+    <!--//////////////////////////////////////////////-->
+    <div class="row">
+      <div class="col-xs-1 ">
+        <div class="col-xs-10" style="background-color: rgb(245,102,0)">
+          <div class="logo"></div>
+        </div>
+      </div>
+      <div class="col-xs-5 col-xs-offset-2 font" id="header">
+        <ul class="nav navbar-nav">
+          <li class="nav-item"><span class="panel" data-id="0" data-collapse-trigger=hover data-toggle="collapse" data-target="#menu1" >小米手机</span>
+          </li>
+          <li class="nav-item"><span class="panel" data-id="1" data-collapse-trigger=hover data-toggle="collapse" data-target="#menu2" >红米</span>
+          </li>
+          <li class="nav-item"><span class="panel" data-id="2" data-collapse-trigger=hover data-toggle="collapse" data-target="#menu3" >平板</span>
+          </li>
+          <li class="nav-item"><span class="panel" data-id="3" data-collapse-trigger=hover data-toggle="collapse" data-target="#menu4" >电视</span>
+          </li>
+          <li class="nav-item"><span class="panel" data-id="4" data-collapse-trigger=hover data-toggle="collapse" data-target="#menu5">盒子</span>
+          </li>
+        </ul>
+      </div>
+      <div class="col-xs-4"> <div class="input-group">
+        <input type="text" class="input-lg" style="border-radius: 0px;width: 220px">
+        <button class="btn btn-default btn-lg"><span class="glyphicon glyphicon-search"></span></button>
+      </div></div>
+    </div>
+  </div>
+</nav>
+</body>
+</html>

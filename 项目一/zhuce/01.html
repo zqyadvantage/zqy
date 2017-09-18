@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" href="../bootstrap.css">
+  <style>
+    body{
+      background-color: #e5e5e5;
+    }
+  .bgtp{
+    background:url("img/mi-logo.png") no-repeat center;
+    height: 49px;
+  }
+    .two{
+      overflow: auto;
+      height: 250px;
+    }
+  </style>
+  <script src="../jquery.js"></script>
+  <script src="../bootstrap.js"></script>
+  <script src="../js/dfrz-store.js"></script>
+  <script>
+    $(function(){
+      var sj='';
+      var onoff=1;
+
+
+        $.getJSON('country.json',function (data) {
+          var html = '';
+          for (category in data) {
+            html += '<h4>' + category + '</h4>';
+            html += '<div class="list-group">';
+            for (var i = 0, len = data[category].length; i < len; i++) {
+              html += '<a class="list-group-item" href="##">' + data[category][i].N + '</a>'
+            }
+            html += '</div>'
+          }
+          $('#one').html(html);
+          html = '';
+      for (category in data) {
+        html += '<h4>' + category + '</h4>';
+        html += '<div class="list-group">';
+        for (var i = 0, len = data[category].length; i < len; i++) {
+          html += '<a class="list-group-item" href="##">' + data[category][i].C + '</a>'
+        }
+        html += '</div>'
+      }
+      $('#two').html(html);
+    })
+
+
+          $('#fasong').on('click',function(){
+            sj='';
+        for(var i=0;i<4;i++){
+          var suiji=Math.floor(Math.random()*10);
+          sj+=suiji.toString();
+        }
+        $.ajax({
+          url:'http://sms.market.alicloudapi.com/singleSendSms',
+          type:'GET',
+          dataType:'json',
+          data:{
+            ParamString:'{"no":"'+sj+'"}',
+            RecNum: $('#phone').val(),
+            SignName:'锐智ZQY',
+            TemplateCode:'SMS_94385038'
+          },headers:{
+            Authorization:'APPCODE 82e5d9e5593246e4b889f5b1f3e639c7'
+          }}).done(function(data){
+             console.log( data) ;
+             console.log(data.message);
+            if(data.success==true){
+              onoff=1;
+            }else {
+              onoff=0;
+            }
+
+        })
+        var i=59;
+       var timer=setInterval(function(){
+         if(i==-1){
+           $('#fasong').text('发送验证码');
+           clearInterval(timer);
+           $('#fasong').attr('disabled',false)
+         }else {
+           $('#fasong').text('已发送('+i+')');
+           $('#fasong').attr('disabled',true);
+           i--;
+         }
+       },1000)
+      })
+
+      $('#first').on('click','a',function(){
+        $('#dropdownMenu1').text($(this).text());
+      })
+      $('#second').on('click','a',function(){
+        $('#dropdownMenu2').text($(this).text());
+      })
+      $('#submit').on('click',function(){
+       if($('#yanzheng').val()==sj&&onoff){
+         alert('提交成功')
+         var user={
+           phone:$('#phone').val(),
+           nation:$('#dropdownMenu1').text()
+         }
+         store.add('user',user);
+         location.href='02.html';
+       }
+       else if(!onoff){
+         alert('手机号码有误');
+       }
+       else {
+         alert('验证码错误');
+        }
+      })
+
+    });
+  </script>
+</head>
+<body>
+<div class="container" style="background-color: white;margin-top: 5%; padding-bottom: 5%;width: 1000px">
+  <div class="row ">
+    <div class="col-xs-1 col-xs-offset-5 " >
+      <div class="col-xs-10 col-xs-offset-10 "  style="background-color: rgb(245,102,0)" ><div class="bgtp row"></div>
+</div>
+    </div>
+  </div>
+<div class="row" >
+<div class="col-xs-12 text-center">
+  <h1>注册小米帐号</h1>
+</div>
+
+</div>
+  <div class="row " style="margin-top: 15px">
+    <div class="col-xs-4 col-xs-offset-4 " >
+  <form action="">
+
+
+  <div class="dropdown row" id="first">
+    <h4>国家 地区</h4>
+    <button class="btn btn-default dropdown-toggle btn-block text-left" type="button"id="dropdownMenu1"
+            data-toggle="dropdown" style="text-align: left;position: relative">中国<span class="caret " style="position:absolute; right: 15px;top: 15px"></span></button>
+    <ul id="two" class="dropdown-menu two" aria-labelledby="dropdownMenu1" style="width:350px">
+    </ul>
+    <p>注册成功后国家和地区将不能被修改</p>
+</div>
+
+
+
+    <div class="dropdown row">
+      <h4>手机号码</h4>
+      <div class="col-xs-12 input-group" id="second">
+      <span class="btn  dropdown-toggle input-group-addon" type="button"id="dropdownMenu2"
+              data-toggle="dropdown"> &nbsp; &nbsp; &nbsp;<span class="caret "></span></span>
+      <ul id="one" class="dropdown-menu two" aria-labelledby="dropdownMenu2">
+
+      </ul>
+
+      <input id="phone" type="text" class="input-sm form-control" value="请输入手机号码">
+      </div>
+      </div>
+
+
+<div class="row" style="margin-top: 15px">
+  <h4>短信验证码</h4>
+  <div class="col-xs-12 input-group">
+  <input id="yanzheng" type="text" class="input-sm form-control" value="短信验证码">
+    <span id="fasong" class="btn input-group-addon" type="button">发送验证码</span>
+  </div>
+</div>
+<div class="row" style="margin-top: 30px">
+   <div class="col-xs-12 ">
+     <button id="submit" class="btn btn-warning form-control" type="button">立即注册</button>
+   </div>
+</div>
+  </form>
+</div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="../bootstrap.css" type="text/css">
+  <style>
+    .site-ad-bar {
+      background: url("img/10.jpg") no-repeat center;
+      height: 100px;
+      padding: 0px;
+    }
+
+    .logo {
+      background: url("img/mi-logo.png") no-repeat center;
+      height: 49px;
+    }
+
+    .font {
+      font-size: 20px;
+    }
+
+    .left1 {
+      background-color: rgba(0,0,0,0.5);
+      color: white;
+      padding: 13.45px 30px;
+    }
+
+
+    .bg-hui {
+      background-color: #9A9B8B;
+      font-size: 15px;
+      text-align: center;
+      color: black;
+      padding: 10px;
+    }
+
+
+.quchu{
+  padding: 0;
+}
+    .nav-item{
+      padding: 15px;
+      cursor: pointer;
+    }
+
+    ul li{
+      list-style: none;
+    }
+a:link{
+  text-decoration: none;
+}
+    .nav-collapse{
+      float: left;
+      margin: 30px;
+    }
+    .img-thumbnail{
+      width: 200px;
+    }
+    .tab-content p,p span{
+      color: red;
+    }
+    .text-hui{
+      color: #9d9d9d;
+    }
+    .carousel-inner p{
+      color: #9d9d9d ;
+      font-size: 10px;
+      width: 180px;
+      margin-left: 20px;
+    }
+  </style>
+  <script src="../jquery.js"></script>
+  <script src="../bootstrap.js"></script>
+  <script>
+    $(function () {
+      $('#dh').load('../main/nav.html');
+      $('[data-toggle=hover]').parent().hover(function () {
+        $(this).toggleClass('open');
+      }, function () {
+        $(this).toggleClass('open');
+      })
+
+      /*var timer=null;
+      $('[data-toggle=collapse]').hover(function(){
+       /!* $(this).trigger('click');*!/
+        $(this).addClass('in');
+      },
+      function(){
+        /!*clearTimeout(timer);
+        var i=$(this);
+        timer=setTimeout(function(){
+         i.trigger('click');
+        },350);*!/
+        $(this).removeClass();
+      });*/
+
+      /*$('[data-collapse-trigger=hover]').on('mouseenter mouseleave',function () {
+        var i=$(this);
+        clearTimeout(enterTimeout);
+        enterTimeout=setTimeout(function(){
+          i.trigger('click');
+        },350);
+        //$(this).trigger('click');
+        var target = $(this).data('target');
+        $(target).collapse('toggle');
+      });*/
+      var enterTimeout=[],leaveTimeout = [];
+      $(document).off('click.bs.collapse.data-api','[data-toggle="collapse"]');
+      $('[data-collapse-trigger=hover],.collapse').hover(function () {
+        var i=$(this);
+        var index =Number(i.data('id'));
+        clearTimeout(leaveTimeout[index]);
+        clearTimeout(enterTimeout[index]);
+        enterTimeout[index]=setTimeout(function(){
+          var target = i.data('target');
+          $(target).collapse('show');
+        },350);
+        //$(this).trigger('click');
+
+      },function(){
+        var i=$(this);
+        var index =Number(i.data('id'));
+        clearTimeout(enterTimeout[index]);
+        clearTimeout(leaveTimeout[index]);
+        leaveTimeout[index]=setTimeout(function(){
+          var target = i.data('target');
+          $(target).collapse('hide');
+        },350);
+      })
+
+
+    })
+
+
+  </script>
+</head>
+<body>
+<div class="container-fluid site-ad-bar"></div>
+<div id="dh"></div>
+<!--导航条-->
+<!--<nav class="navbar navbar-inverse navbar-static-top">
+  <div class="container">
+    <ul class="nav navbar-nav">
+      <li><a href="#">小米商城</a></li>
+      <li><a href="#">MIUI</a></li>
+      <li><a href="#">米聊</a></li>
+      <li><a href="#">游戏</a></li>
+      <li><a href="#">多看阅读</a></li>
+      <li><a href="#">云服务</a></li>
+      <li><a href="#">金融</a></li>
+      <li><a href="#">小米商城手机版</a></li>
+      <li><a href="#">问题反馈</a></li>
+      <li><a href="#">Select Region</a></li>
+    </ul>
+
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="../login/login.html">登录</a></li>
+      <li><a href="../zhuce/01.html">注册</a></li>
+      <li><a href="">消息通知</a></li>
+      <li class=" dropdown"><a href="#" class="dropdown-toggle" data-toggle="hover">购物车</a>
+        <div class="dropdown-menu dropdown-menu-right cart">
+          <ul class="container-fluid" style="list-style: none">
+            <li>
+              <div class="row">
+                <div class="col-xs-5"><img src="img/xiaomi6.jpg" class="img-thumbnail" alt=""></div>
+                <div class="col-xs-4">小米6</div>
+                <div class="col-xs-3 text-danger">￥2499</div>
+              </div>
+            </li>
+            <li class="divider"></li>
+            <li>
+              <div class="row">
+                <div class="col-xs-5"><img src="img/xiaomi6.jpg" class="img-thumbnail" alt=""></div>
+                <div class="col-xs-4">小米6</div>
+                <div class="col-xs-3 text-danger">￥2499</div>
+              </div>
+            </li>
+            <li class="divider"></li>
+            <li>
+              <div class="row">
+                <div class="col-xs-5"><img src="img/xiaomi6.jpg" class="img-thumbnail" alt=""></div>
+                <div class="col-xs-4">小米6</div>
+                <div class="col-xs-3 text-danger">￥2499</div>
+              </div>
+            </li>
+            <li class="divider"></li>
+            <li>
+              <div class="row">
+                <div class="col-xs-5"><img src="img/xiaomi6.jpg" class="img-thumbnail" alt=""></div>
+                <div class="col-xs-4">小米6</div>
+                <div class="col-xs-3 text-danger">￥2499</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>-->
+<!--导航栏-->
+<!--<nav class="navbar text-center " id="nav">
+&lt;!&ndash;///////////////-&#45;&#45;collapse-&#45;&#45;//////////////////&ndash;&gt;
+<div class="collapse bg-info" id="menu1" style="width:100%;position:absolute;right:0;top:50px; z-index: 10;">
+  <ul>
+    <li class="nav-collapse"><img src="img/xiaomi.png" class="img-thumbnail" alt="">
+      <p>小米</p>￥2499
+    </li>
+    <li class="nav-collapse"><img src="img/xiaomi4.jpg" class="img-thumbnail" alt="">
+      <p>小米</p>￥2499
+    </li>
+    <li class="nav-collapse"><img src="img/xiaomi3.jpg" class="img-thumbnail" alt="">
+      <p>小米</p>￥2499
+    </li>
+  </ul>
+</div>
+  <div class="collapse bg-info" id="menu2" style="width: 100%;position:absolute;right: 0;top:50px; z-index: 10">
+    <ul >
+      <li class="nav-collapse"><img src="img/hongmi.jpg" class="img-thumbnail" alt="">
+        <p>红米</p>￥1899
+      </li>
+      <li class="nav-collapse"><img src="img/hongmi2.png" class="img-thumbnail" alt="">
+        <p>红米</p>￥1899
+      </li>
+      <li class="nav-collapse"><img src="img/hongmi3.jpg" class="img-thumbnail" alt="">
+        <p>红米</p>￥1899
+      </li>
+    </ul>
+  </div>
+  <div class="collapse bg-info" id="menu3" style="width: 100%;position:absolute;right: 0;top:50px; z-index: 10">
+    <ul>
+      <li class="nav-collapse"><img src="img/pingban2.png" class="img-thumbnail" alt="">
+        <p>平板</p>￥4499
+      </li>
+      <li class="nav-collapse"><img src="img/pingban.jpg" class="img-thumbnail" alt="">
+        <p>平板</p>￥4499
+      </li>
+      <li class="nav-collapse"><img src="img/pingban.jpg" class="img-thumbnail" alt="">
+        <p>平板</p>￥4499
+      </li>
+    </ul>
+  </div>
+  <div class="collapse bg-info" id="menu4" style="width: 100%;position:absolute;right: 0;top:50px; z-index: 10">
+    <ul>
+      <li class="nav-collapse"><img src="img/dianshi2.png" class="img-thumbnail" alt="">
+        <p>电视</p>￥4499
+      </li>
+      <li class="nav-collapse"><img src="img/dianshi3.png" class="img-thumbnail" alt="">
+        <p>电视</p>￥4499
+      </li>
+      <li class="nav-collapse"><img src="img/dianshi4.png" class="img-thumbnail" alt="">
+        <p>电视</p>￥4499
+      </li>
+    </ul>
+  </div>
+  <div class="collapse bg-info"  id="menu5" style="width: 100%;position:absolute;right: 0;top:50px; z-index: 10">
+    <ul>
+      <li class="nav-collapse"><img src="img/hezi1.png" class="img-thumbnail" alt="">
+        <p>盒子</p>￥4499
+      </li>
+      <li class="nav-collapse"><img src="img/hezi2.png" class="img-thumbnail" alt="">
+        <p>盒子</p>￥4499
+      </li>
+      <li class="nav-collapse"><img src="img/hezi3.jpg" class="img-thumbnail" alt="">
+        <p>盒子</p>￥4499
+      </li>
+      <li class="nav-collapse"><img src="img/hezi4.png" class="img-thumbnail" alt="">
+        <p>盒子</p>￥4499
+      </li>
+    </ul>
+  </div>
+
+&lt;!&ndash;//////////////////////////////////////////&ndash;&gt;
+
+    <div class="container" style="position: relative">
+      &lt;!&ndash;////////////////collapse////////////////////////&ndash;&gt;
+      <div class="collapse bg-success col-xs-9" id="menu01" style="position:absolute; right: 0;top:70px;z-index: 10">
+        <div class="row">
+          <div class="col-xs-4"><img src="img/hongmi.jpg" class="img-thumbnail" alt="">
+            <p>红米</p>
+            <p class="text-danger">选购</p>
+          </div>
+          <div class="col-xs-4"><img src="img/hongmi.jpg" class="img-thumbnail" alt="">
+            <p>红米</p>
+            <p class="text-danger">选购</p>
+          </div>
+          <div class="col-xs-4"><img src="img/hongmi.jpg" class="img-thumbnail" alt="">
+            <p>红米</p>
+            <p class="text-danger">选购</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-4"><img src="img/hongmi.jpg" class="img-thumbnail" alt="">
+            <p>红米</p>
+            <p class="text-danger">选购</p>
+          </div>
+          <div class="col-xs-4"><img src="img/hongmi.jpg" class="img-thumbnail" alt="">
+            <p>红米</p>
+            <p class="text-danger">选购</p>
+          </div>
+          <div class="col-xs-4"><img src="img/hongmi.jpg" class="img-thumbnail" alt="">
+            <p>红米</p>
+            <p class="text-danger">选购</p>
+          </div>
+        </div>
+      </div>
+      &lt;!&ndash;//////////////////////////////////////////////&ndash;&gt;
+      <div class="row">
+    <div class="col-xs-1 ">
+      <div class="col-xs-10" style="background-color: rgb(245,102,0)">
+        <div class="logo"></div>
+      </div>
+    </div>
+    <div class="col-xs-5 col-xs-offset-2 font" id="header">
+      <ul class="nav navbar-nav">
+      <li class="nav-item"><span data-id="0" class="panel" data-collapse-trigger=hover data-toggle="collapse" data-target="#menu1" >小米手机</span>
+      </li>
+      <li class="nav-item"><span data-id="1" class="panel" data-collapse-trigger="hover" data-toggle="collapse" data-target="#menu2" >红米</span>
+      </li>
+      <li class="nav-item"><span data-id="2" class="panel" data-collapse-trigger="hover" data-toggle="collapse" data-target="#menu3" >平板</span>
+      </li>
+      <li class="nav-item"><span data-id="3" class="panel" data-collapse-trigger="hover" data-toggle="collapse" data-target="#menu4" >电视</span>
+      </li>
+      <li class="nav-item"><span data-id="4" class="panel" data-collapse-trigger="hover" data-toggle="collapse" data-target="#menu5">盒子</span>
+      </li>
+      </ul>
+    </div>
+      <div class="col-xs-4"> <div class="input-group">
+        <input type="text" class="input-lg" style="border-radius: 0px;width: 220px">
+        <button class="btn btn-default btn-lg"><span class="glyphicon glyphicon-search"></span></button>
+      </div></div>
+    </div>
+    </div>
+  </nav>-->
+<!--巨幕-->
+  <div class="container">
+    <div>
+      <div class="collapse bg-success col-xs-9" data-id="0" data-target="#menu01" id="menu01" style="position:absolute; right: -45px;top:250px;z-index: 10">
+        <div class="row">
+          <div class="col-xs-4"><img src="img/hongmi.jpg" class="img-thumbnail" alt="">
+            <p>红米</p>
+            <p class="text-danger">选购</p>
+          </div>
+          <div class="col-xs-4"><img src="img/hongmi.jpg" class="img-thumbnail" alt="">
+            <p>红米</p>
+            <p class="text-danger">选购</p>
+          </div>
+          <div class="col-xs-4"><img src="img/hongmi.jpg" class="img-thumbnail" alt="">
+            <p>红米</p>
+            <p class="text-danger">选购</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-4"><img src="img/hongmi.jpg" class="img-thumbnail" alt="">
+            <p>红米</p>
+            <p class="text-danger">选购</p>
+          </div>
+          <div class="col-xs-4"><img src="img/hongmi.jpg" class="img-thumbnail" alt="">
+            <p>红米</p>
+            <p class="text-danger">选购</p>
+          </div>
+          <div class="col-xs-4"><img src="img/hongmi.jpg" class="img-thumbnail" alt="">
+            <p>红米</p>
+            <p class="text-danger">选购</p>
+          </div>
+        </div>
+      </div>
+      <div class="collapse bg-success col-xs-9" data-id="1" data-target="#menu02" id="menu02" style="position:absolute; right: -45px;top:250px;z-index: 10">
+        <div class="row">
+          <div class="col-xs-4"><img src="img/hongmi.jpg" class="img-thumbnail" alt="">
+            <p>红米</p>
+            <p class="text-danger">选购</p>
+          </div>
+          <div class="col-xs-4"><img src="img/hongmi.jpg" class="img-thumbnail" alt="">
+            <p>红米</p>
+            <p class="text-danger">选购</p>
+          </div>
+          <div class="col-xs-4"><img src="img/hongmi.jpg" class="img-thumbnail" alt="">
+            <p>红米</p>
+            <p class="text-danger">选购</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-4"><img src="img/hongmi.jpg" class="img-thumbnail" alt="">
+            <p>红米</p>
+            <p class="text-danger">选购</p>
+          </div>
+          <div class="col-xs-4"><img src="img/hongmi.jpg" class="img-thumbnail" alt="">
+            <p>红米</p>
+            <p class="text-danger">选购</p>
+          </div>
+          <div class="col-xs-4"><img src="img/hongmi.jpg" class="img-thumbnail" alt="">
+            <p>红米</p>
+            <p class="text-danger">选购</p>
+          </div>
+        </div>
+      </div>
+      <div class="collapse bg-success col-xs-9" data-id="2" data-target="#menu03" id="menu03" style="position:absolute; right: -45px;top:250px;z-index: 10">
+        <div class="row">
+          <div class="col-xs-4"><img src="img/hongmi.jpg" class="img-thumbnail" alt="">
+            <p>红米</p>
+            <p class="text-danger">选购</p>
+          </div>
+          <div class="col-xs-4"><img src="img/hongmi.jpg" class="img-thumbnail" alt="">
+            <p>红米</p>
+            <p class="text-danger">选购</p>
+          </div>
+          <div class="col-xs-4"><img src="img/hongmi.jpg" class="img-thumbnail" alt="">
+            <p>红米</p>
+            <p class="text-danger">选购</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-4"><img src="img/hongmi.jpg" class="img-thumbnail" alt="">
+            <p>红米</p>
+            <p class="text-danger">选购</p>
+          </div>
+          <div class="col-xs-4"><img src="img/hongmi.jpg" class="img-thumbnail" alt="">
+            <p>红米</p>
+            <p class="text-danger">选购</p>
+          </div>
+          <div class="col-xs-4"><img src="img/hongmi.jpg" class="img-thumbnail" alt="">
+            <p>红米</p>
+            <p class="text-danger">选购</p>
+          </div>
+        </div>
+      </div>
+      <div class="collapse bg-success col-xs-9" data-id="3" data-target="#menu04" id="menu04" style="position:absolute; right: -45px;top:250px;z-index: 10">
+        <div class="row">
+          <div class="col-xs-4"><img src="img/hongmi.jpg" class="img-thumbnail" alt="">
+            <p>红米</p>
+            <p class="text-danger">选购</p>
+          </div>
+          <div class="col-xs-4"><img src="img/hongmi.jpg" class="img-thumbnail" alt="">
+            <p>红米</p>
+            <p class="text-danger">选购</p>
+          </div>
+          <div class="col-xs-4"><img src="img/hongmi.jpg" class="img-thumbnail" alt="">
+            <p>红米</p>
+            <p class="text-danger">选购</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-4"><img src="img/hongmi.jpg" class="img-thumbnail" alt="">
+            <p>红米</p>
+            <p class="text-danger">选购</p>
+          </div>
+          <div class="col-xs-4"><img src="img/hongmi.jpg" class="img-thumbnail" alt="">
+            <p>红米</p>
+            <p class="text-danger">选购</p>
+          </div>
+          <div class="col-xs-4"><img src="img/hongmi.jpg" class="img-thumbnail" alt="">
+            <p>红米</p>
+            <p class="text-danger">选购</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="position: relative">
+    <ul class="col-lg-3 quchu font " style="position: absolute;left: 0px;z-index: 9">
+      <li class="left1 btn-link" data-toggle="collapse" data-collapse-trigger="hover" data-id="0" data-target="#menu01">
+        <div>手机电话卡<span class="glyphicon glyphicon-menu-right pull-right"></span></div>
+      </li>
+      <li class="left1 btn-link" data-toggle="collapse" data-collapse-trigger="hover" data-id="1" data-target="#menu02">
+        <div>
+        平板笔记本<span class="glyphicon glyphicon-menu-right pull-right"></span></div></li>
+      <li class="left1 btn-link" data-toggle="collapse" data-collapse-trigger="hover" data-id="2" data-target="#menu03">
+        <div >
+        电视盒子<span class="glyphicon glyphicon-menu-right pull-right"></span></div></li>
+      <li class="left1 btn-link" data-toggle="collapse" data-collapse-trigger="hover" data-id="3" data-target="#menu04">
+        <div >
+        路由器<span class="glyphicon glyphicon-menu-right pull-right"></span></div></li>
+      <li class="left1 btn-link"><div>移动电源<span class="glyphicon glyphicon-menu-right pull-right"></span></div></li>
+      <li class="left1 btn-link"><div>耳机音响<span class="glyphicon glyphicon-menu-right pull-right"></span></div></li>
+      <li class="left1 btn-link"><div>保护套<span class="glyphicon glyphicon-menu-right pull-right"></span></div></li>
+      <li class="left1 btn-link"><div>支架<span class="glyphicon glyphicon-menu-right pull-right"></span></div></li>
+    </ul>
+    <div class="col-xs-12  quchu">
+      <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+          <li data-target="#myCarousel" data-slide-to="1"></li>
+          <li data-target="#myCarousel" data-slide-to="2"></li>
+          <li data-target="#myCarousel" data-slide-to="3"></li>
+        </ol>
+        <div class="carousel-inner">
+          <div class="item active">
+            <img src="img/jumu1.jpg" alt="First slide">
+          </div>
+          <div class="item">
+            <img src="img/jumu2.jpg" alt="Second slide">
+          </div>
+          <div class="item">
+            <img src="img/jumu3.jpg" alt="Third slide">
+          </div>
+          <div class="item">
+            <img src="img/jumu4.jpg" alt="foured slide">
+          </div>
+        </div>
+        <a class="carousel-control left" style="left:292px;line-height: 400px;font-size: 50px;width: 40px" href="#myCarousel"
+           data-slide="prev">&lsaquo;</a>
+        <a class="carousel-control right" style="line-height: 400px;font-size: 50px;width: 60px" href="#myCarousel"
+           data-slide="next">&rsaquo;</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 20px">
+    <div class="col-xs-3">
+      <div class="row ">
+        <div class=" col-xs-4 bg-hui btn-link" style="padding: 10px"><span class="glyphicon glyphicon-phone" style="font-size: 29px"></span>
+          <p>购买手机</p></div>
+        <div class=" col-xs-4  bg-hui btn-link"><span class="glyphicon glyphicon-retweet" style="font-size: 29px"></span>
+          <p>以旧换新</p></div>
+        <div class=" col-xs-4  bg-hui btn-link"><span class="glyphicon glyphicon-sd-video" style="font-size: 29px"></span>
+          <p>米粉卡</p></div>
+      </div>
+      <div class=" row">
+        <div class="col-xs-4  bg-hui btn-link"><span class="glyphicon glyphicon-duplicate" style="font-size: 29px"></span>
+          <p>F码通道</p></div>
+        <div class="col-xs-4  bg-hui btn-link"><span class="glyphicon glyphicon-gift" style="font-size: 29px"></span>
+          <p>企业团购</p></div>
+        <div class="col-xs-4  bg-hui btn-link"><span class="glyphicon glyphicon-jpy" style="font-size: 29px"></span>
+          <p>话费充值</p></div>
+      </div>
+    </div>
+    <div class="col-lg-9 quchu">
+      <div class="col-xs-4"><img src="img/02.jpg" alt="" style="width: 290px"></div>
+      <div class="col-xs-4"><img src="img/03.jpg" alt="" style="width: 290px"></div>
+      <div class="col-xs-4"><img src="img/04.jpg" alt="" style="width: 290px"></div>
+    </div>
+  </div>
+</div>
+<!--明星单品-->
+<div class="container" style="margin-top: 20px">
+  <div id="myCarousel2" class="carousel slide">
+  <div class="row">
+    <div class="col-xs-6"><h2>小米明星单品</h2></div>
+     <div class="col-xs-offset-5 col-xs-1" style="padding-top: 30px">
+       <button type="button" href="#myCarousel2"
+               data-slide="prev">&lsaquo; </button>
+       <button type="button" href="#myCarousel2"
+               data-slide="next">&rsaquo;</button>
+     </div>
+  </div>
+  <div class="row">
+    <div class="carousel-inner">
+        <div class="item active">
+          <div class="text-center col-xs-3" >
+            <div class="col-xs-12" style="border-top: 1px solid red;">
+            <img src="img/hongmi4x.png" style="width: 135px" alt=""><p>红米4X</p><p>4100mAh超长续航，8 核处理器</p><p>699元起</p></div></div>
+          <div class="text-center col-xs-3" >
+            <div class="col-xs-12" style="border-top: 1px solid blue;">
+            <img src="img/xiaomiMIX.png" style="width: 135px" alt=""><p>红米4X</p><p>4100mAh超长续航，8 核处理器</p><p>699元起</p></div></div>
+          <div class="text-center col-xs-3" >
+            <div class="col-xs-12" style="border-top: 1px solid greenyellow;">
+            <img src="img/xiaomijingshuiqi.jpg" style="width: 135px" alt=""><p>红米4X</p><p>4100mAh超长续航，8 核处理器</p><p>699元起</p></div></div>
+          <div class="text-center col-xs-3" >
+            <div class="col-xs-12" style="border-top: 1px solid deeppink;">
+            <img src="img/xiaomidianshi.png" style="width: 135px" alt=""><p>红米4X</p><p>4100mAh超长续航，8 核处理器</p><p>699元起</p></div></div>
+        </div>
+        <div class="item">
+          <div class="text-center col-xs-3" >
+            <div class="col-xs-12" style="border-top: 1px solid red;">
+              <img src="img/hongmi4x.png" style="width: 135px" alt=""><p>红米4X</p><p>4100mAh超长续航，8 核处理器</p><p>699元起</p></div></div>
+          <div class="text-center col-xs-3" >
+            <div class="col-xs-12" style="border-top: 1px solid blue;">
+              <img src="img/xiaomiMIX.png" style="width: 135px" alt=""><p>红米4X</p><p>4100mAh超长续航，8 核处理器</p><p>699元起</p></div></div>
+          <div class="text-center col-xs-3" >
+            <div class="col-xs-12" style="border-top: 1px solid greenyellow;">
+              <img src="img/xiaomijingshuiqi.jpg" style="width: 135px" alt=""><p>红米4X</p><p>4100mAh超长续航，8 核处理器</p><p>699元起</p></div></div>
+          <div class="text-center col-xs-3" >
+            <div class="col-xs-12" style="border-top: 1px solid deeppink;">
+              <img src="img/xiaomidianshi.png" style="width: 135px" alt=""><p>红米4X</p><p>4100mAh超长续航，8 核处理器</p><p>699元起</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--家电-->
+<div class="container bg-info" style="margin-top: 20px;padding-top:20px ">
+  <div class="row">
+    <span style="font-size: 35px">家电</span>
+    <ul class="nav nav-tabs pull-right" style="margin-right: 60px">
+      <li class="active"><a href="#first" data-toggle="tab">热门</a></li>
+      <li><a href="#second" data-toggle="tab">电视音乐</a></li>
+      <li><a href="#three" data-toggle="tab">影院</a></li>
+    </ul>
+    <div class="tab-content text-center">
+      <div class="row tab-pane  in active" id="first">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 ">
+          <img src="img/jiadian1.jpg" alt="" >
+        </div>
+        <div class="col-lg-9 col-md-8 col-sm-6 col-xs-12">
+          <div class="row">
+          <div class="col-lg-4 col-md-6 col-xs-12 ">
+            <img src="img/jiadian8.jpg" alt="">
+            <h4>家电</h4>
+            <p>￥123</p>
+          </div>
+          <div class="col-lg-4 col-md-6 col-xs-12 ">
+            <img src="img/jiadian3.jpg" alt="">
+            <h4>家电</h4>
+            <p>￥123</p>
+          </div>
+          <div class="col-lg-4 col-md-6 col-xs-12">
+            <img src="img/jiadian4.jpg" alt="">
+            <h4>家电</h4>
+            <p>￥123</p>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 40px">
+          <div class="col-lg-4 col-md-6 col-xs-12">
+            <img src="img/jiadian5.jpg" alt="">
+            <h4>家电</h4>
+            <p>￥123</p>
+          </div>
+          <div class="col-lg-4 col-md-6 col-xs-12">
+            <img src="img/jiadian6.jpg" alt="">
+            <h4>家电</h4>
+            <p>￥123</p>
+          </div>
+          <div class="col-lg-4 col-md-6 col-xs-12">
+            <h2><a href="../gerenzhongxin/dianshihezi.html">浏览更多</a></h2>
+            <p>热门</p>
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="row tab-pane fade" id="second">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 ">
+          <img src="img/jiadian1.jpg" alt="" >
+        </div>
+        <div class="col-lg-9 col-md-8 col-sm-6 col-xs-12">
+          <div class="row">
+            <div class="col-lg-4 col-md-6 col-xs-12 ">
+              <a href="../shangpin/shangpinxiangqing.html">
+                <img src="img/jiadian3.jpg" alt="">
+              <h4>家电</h4>
+              <p>￥123</p>
+              </a>
+            </div>
+            <div class="col-lg-4 col-md-6 col-xs-12 ">
+              <img src="img/jiadian4.jpg" alt="">
+              <h4>家电</h4>
+              <p>￥123</p>
+            </div>
+            <div class="col-lg-4 col-md-6 col-xs-12">
+              <img src="img/jiadian5.jpg" alt="">
+              <h4>家电</h4>
+              <p>￥123</p>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 40px">
+            <div class="col-lg-4 col-md-6 col-xs-12">
+              <img src="img/jiadian6.jpg" alt="">
+              <h4>家电</h4>
+              <p>￥123</p>
+            </div>
+            <div class="col-lg-4 col-md-6 col-xs-12">
+              <img src="img/jiadian7.jpg" alt="">
+              <h4>家电</h4>
+              <p>￥123</p>
+            </div>
+            <div class="col-lg-4 col-md-6 col-xs-12">
+              <h2><a href="">浏览更多</a></h2>
+              <p>电视音乐</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row tab-pane fade" id="three">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 ">
+          <img src="img/jiadian1.jpg" alt="" >
+        </div>
+        <div class="col-lg-9 col-md-8 col-sm-6 col-xs-12">
+          <div class="row">
+            <div class="col-lg-4 col-md-6 col-xs-12 ">
+              <img src="img/jiadian4.jpg" alt="">
+              <h4>家电</h4>
+              <p>￥123</p>
+            </div>
+            <div class="col-lg-4 col-md-6 col-xs-12 ">
+              <img src="img/jiadian5.jpg" alt="">
+              <h4>家电</h4>
+              <p>￥123</p>
+            </div>
+            <div class="col-lg-4 col-md-6 col-xs-12">
+              <img src="img/jiadian6.jpg" alt="">
+              <h4>家电</h4>
+              <p>￥123</p>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 40px">
+            <div class="col-lg-4 col-md-6 col-xs-12">
+              <img src="img/jiadian7.jpg" alt="">
+              <h4>家电</h4>
+              <p>￥123</p>
+            </div>
+            <div class="col-lg-4 col-md-6 col-xs-12">
+              <img src="img/jiadian8.jpg" alt="">
+              <h4>家电</h4>
+              <p>￥123</p>
+            </div>
+            <div class="col-lg-4 col-md-6 col-xs-12">
+
+              <h2><a href="">浏览更多</a></h2>
+              <p>影院</p>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+  </div>
+<!--智能-->
+<div class="container bg-info" style="margin-top: 20px;padding-top:20px ">
+  <div class="row">
+    <span style="font-size: 35px">智能</span>
+    <ul class="nav nav-tabs pull-right" style="margin-right: 60px">
+      <li class="active"><a href="#a" data-toggle="tab">热门</a></li>
+      <li><a href="#b" data-toggle="tab">出行</a></li>
+      <li><a href="#c" data-toggle="tab">健康</a></li>
+    </ul>
+    <div class="tab-content text-center">
+      <div class="row tab-pane  in active" id="a">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 ">
+          <img src="img/jiadian1.jpg" alt="" >
+        </div>
+        <div class="col-lg-9 col-md-8 col-sm-6 col-xs-12">
+          <div class="row">
+            <div class="col-lg-4 col-md-6 col-xs-12 ">
+              <img src="img/jiadian8.jpg" alt="">
+              <h4>智能</h4>
+              <p>￥123</p>
+            </div>
+            <div class="col-lg-4 col-md-6 col-xs-12 ">
+              <img src="img/jiadian3.jpg" alt="">
+              <h4>智能</h4>
+              <p>￥123</p>
+            </div>
+            <div class="col-lg-4 col-md-6 col-xs-12">
+              <img src="img/jiadian4.jpg" alt="">
+              <h4>智能</h4>
+              <p>￥123</p>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 40px">
+            <div class="col-lg-4 col-md-6 col-xs-12">
+              <img src="img/jiadian5.jpg" alt="">
+              <h4>智能</h4>
+              <p>￥123</p>
+            </div>
+            <div class="col-lg-4 col-md-6 col-xs-12">
+              <img src="img/jiadian6.jpg" alt="">
+              <h4>智能</h4>
+              <p>￥123</p>
+            </div>
+            <div class="col-lg-4 col-md-6 col-xs-12">
+              <h2><a href="../gerenzhongxin/zhineng.html">浏览更多</a></h2>
+              <p>热门</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row tab-pane fade" id="b">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 ">
+          <img src="img/jiadian1.jpg" alt="" >
+        </div>
+        <div class="col-lg-9 col-md-8 col-sm-6 col-xs-12">
+          <div class="row">
+            <div class="col-lg-4 col-md-6 col-xs-12 ">
+              <img src="img/jiadian3.jpg" alt="">
+              <h4>智能</h4>
+              <p>￥123</p>
+            </div>
+            <div class="col-lg-4 col-md-6 col-xs-12 ">
+              <img src="img/jiadian4.jpg" alt="">
+              <h4>智能</h4>
+              <p>￥123</p>
+            </div>
+            <div class="col-lg-4 col-md-6 col-xs-12">
+              <img src="img/jiadian5.jpg" alt="">
+              <h4>智能</h4>
+              <p>￥123</p>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 40px">
+            <div class="col-lg-4 col-md-6 col-xs-12">
+              <img src="img/jiadian6.jpg" alt="">
+              <h4>智能</h4>
+              <p>￥123</p>
+            </div>
+            <div class="col-lg-4 col-md-6 col-xs-12">
+              <img src="img/jiadian7.jpg" alt="">
+              <h4>智能</h4>
+              <p>￥123</p>
+            </div>
+            <div class="col-lg-4 col-md-6 col-xs-12">
+              <img src="img/jiadian8.jpg" alt="">
+              <h4>智能</h4>
+              <p>￥123</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row tab-pane fade" id="c">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 ">
+          <img src="img/jiadian1.jpg" alt="" >
+        </div>
+        <div class="col-lg-9 col-md-8 col-sm-6 col-xs-12">
+          <div class="row">
+            <div class="col-lg-4 col-md-6 col-xs-12 ">
+              <img src="img/jiadian4.jpg" alt="">
+              <h4>智能</h4>
+              <p>￥123</p>
+            </div>
+            <div class="col-lg-4 col-md-6 col-xs-12 ">
+              <img src="img/jiadian5.jpg" alt="">
+              <h4>智能</h4>
+              <p>￥123</p>
+            </div>
+            <div class="col-lg-4 col-md-6 col-xs-12">
+              <img src="img/jiadian6.jpg" alt="">
+              <h4>智能</h4>
+              <p>￥123</p>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 40px">
+            <div class="col-lg-4 col-md-6 col-xs-12">
+              <img src="img/jiadian7.jpg" alt="">
+              <h4>智能</h4>
+              <p>￥123</p>
+            </div>
+            <div class="col-lg-4 col-md-6 col-xs-12">
+              <img src="img/jiadian8.jpg" alt="">
+              <h4>智能</h4>
+              <p>￥123</p>
+            </div>
+            <div class="col-lg-4 col-md-6 col-xs-12">
+              <img src="img/jiadian3.jpg" alt="">
+              <h4>智能</h4>
+              <p>￥123</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--热评-->
+<div class="container" style="margin-top: 20px">
+  <h2>热评产品</h2>
+  <div class="row" >
+    <div class="col-xs-3 " >
+      <div class="bg-info col-xs-12">
+      <div class="row"><img src="img/reping1.jpg" style="width: 100%" alt=""></div>
+      <p>先五星好评。再来说说小米空气净化器，北方的天气雾霾越来越常态，这就迫切需要一台性价比高的空气净化</p>
+      <p class="text-hui">来自于 sddyboy 的评价</p>
+      <p>小米空气净化器2 |<span>699元</span></p>
+    </div>
+    </div>
+    <div class="col-xs-3 " >
+      <div class="bg-info col-xs-12">
+        <div class="row"><img src="img/reping2.jpg" style="width: 100%" alt=""></div>
+        <p>先五星好评。再来说说小米空气净化器，北方的天气雾霾越来越常态，这就迫切需要一台性价比高的空气净化</p>
+        <p class="text-hui">来自于 sddyboy 的评价</p>
+        <p>小米空气净化器2 |<span>699元</span></p>
+      </div>
+    </div>
+    <div class="col-xs-3 " >
+      <div class="bg-info col-xs-12">
+        <div class="row"><img src="img/reping3.jpg" style="width: 100%" alt=""></div>
+        <p>先五星好评。再来说说小米空气净化器，北方的天气雾霾越来越常态，这就迫切需要一台性价比高的空气净化</p>
+        <p class="text-hui">来自于 sddyboy 的评价</p>
+        <p>小米空气净化器2 |<span>699元</span></p>
+      </div>
+    </div>
+    <div class="col-xs-3 " >
+      <div class="bg-info col-xs-12">
+        <div class="row"><img src="img/reping4.jpg" style="width: 100%" alt=""></div>
+        <p>先五星好评。再来说说小米空气净化器，北方的天气雾霾越来越常态，这就迫切需要一台性价比高的空气净化</p>
+        <p class="text-hui">来自于 sddyboy 的评价</p>
+        <p>小米空气净化器2 |<span>699元</span></p>
+      </div>
+    </div>
+  </div>
+</div>
+<!--内容-->
+<div class="container" style="margin-top: 20px">
+  <h2>内容</h2>
+<div class="row text-center">
+  <div class="col-xs-3">
+    <div class="col-xs-12" style="border-top: 1px solid orange">
+      <h4 style="margin-top: 50px;margin-bottom: 30px">图书</h4>
+
+      <div id="myCarousel3" class="carousel slide" style="padding-bottom: 50px">
+        <ol class="carousel-indicators bg-success">
+          <li data-target="#myCarousel3" data-slide-to="0" class="active"></li>
+          <li data-target="#myCarousel3" data-slide-to="1"></li>
+          <li data-target="#myCarousel3" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner" style="height: 300px">
+          <div class="item active" >
+              <h4>哈利·波特与被诅咒的孩子</h4>
+            <p >“哈利·波特”第八个故事中文版震撼来袭！特别彩排版剧本！</p>
+            <span>29.37元</span>
+            <img src="img/tushu1.png" style="width: 100%" alt="First slide">
+          </div>
+          <div class="item">
+            <h4>好吗好的</h4>
+            <p >畅销作家大冰2016年新书！讲给你听，好吗好的！</p>
+            <span>17.99</span>
+            <img src="img/tushu2.png" style="width: 100%" alt="Second slide">
+          </div>
+          <div class="item">
+            <h4>哈利·波特与被诅咒的孩子</h4>
+            <p >“哈利·波特”第八个故事中文版震撼来袭！特别彩排版剧本！</p>
+            <span>29.37元</span>
+            <img src="img/tushu3.jpg" style="width: 100%" alt="Third slide">
+          </div>
+        </div>
+        <a class="carousel-control left" style="height: 30px;margin-top: 45%" href="#myCarousel3"
+           data-slide="prev">&lsaquo;</a>
+        <a class="carousel-control right" style="height: 30px;margin-top: 45%" href="#myCarousel3"
+           data-slide="next">&rsaquo;</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-3">
+    <div class="col-xs-12" style="border-top: 1px solid orange">
+      <h4 style="margin-top: 50px;margin-bottom: 30px">MIUI主题</h4>
+
+      <div id="myCarousel4" class="carousel slide" style="padding-bottom: 50px">
+        <ol class="carousel-indicators bg-success">
+          <li data-target="#myCarousel4" data-slide-to="0" class="active"></li>
+          <li data-target="#myCarousel4" data-slide-to="1"></li>
+          <li data-target="#myCarousel4" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner" style="height: 300px">
+          <div class="item active" >
+            <h4>吴亦凡定制主题</h4>
+            <p >6张锁屏动态壁纸随机，每张都给你惊喜！</p>
+            <span>免费</span>
+            <img src="img/zhuti1.jpg" style="width: 100%" alt="First slide">
+          </div>
+          <div class="item">
+            <h4>哈利·波特与被诅咒的孩子</h4>
+            <p >“哈利·波特”第八个故事中文版震撼来袭！特别彩排版剧本！</p>
+            <span>29.37元</span>
+            <img src="img/zhuti2.jpg" style="width: 100%" alt="Second slide">
+          </div>
+          <div class="item">
+            <h4>哈利·波特与被诅咒的孩子</h4>
+            <p >“哈利·波特”第八个故事中文版震撼来袭！特别彩排版剧本！</p>
+            <span>29.37元</span>
+            <img src="img/zhuti3.jpg" style="width: 100%" alt="Third slide">
+          </div>
+        </div>
+        <a class="carousel-control left" style="height: 30px;margin-top: 45%" href="#myCarousel4"
+           data-slide="prev">&lsaquo;</a>
+        <a class="carousel-control right" style="height: 30px;margin-top: 45%" href="#myCarousel4"
+           data-slide="next">&rsaquo;</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-3">
+    <div class="col-xs-12" style="border-top: 1px solid orange">
+      <h4 style="margin-top: 50px;margin-bottom: 30px">游戏</h4>
+
+      <div id="myCarousel5" class="carousel slide" style="padding-bottom: 50px">
+        <ol class="carousel-indicators bg-success">
+          <li data-target="#myCarousel5" data-slide-to="0" class="active"></li>
+          <li data-target="#myCarousel5" data-slide-to="1"></li>
+          <li data-target="#myCarousel5" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner" style="height: 300px">
+          <div class="item active" >
+            <h4>米柚手游模拟器</h4>
+            <p >在电脑上玩遍小米所有手游</p>
+            <br>
+            <span>免费</span>
+            <img src="img/youxi1.png" style="width: 100%" alt="First slide">
+          </div>
+          <div class="item">
+            <h4>剑侠世界</h4>
+            <p >一生不容错过的浪漫武侠！！</p>
+            <br>
+            <span>免费</span>
+            <img src="img/youxi2.jpg" style="width: 100%" alt="Second slide">
+          </div>
+          <div class="item">
+            <h4>哈利·波特与被诅咒的孩子</h4>
+            <p >“哈利·波特”第八个故事中文版震撼来袭！特别彩排版剧本！</p>
+            <span>29.37元</span>
+            <img src="img/tushu3.jpg" style="width: 100%" alt="Third slide">
+          </div>
+        </div>
+        <a class="carousel-control left" style="height: 30px;margin-top: 45%" href="#myCarousel5"
+           data-slide="prev">&lsaquo;</a>
+        <a class="carousel-control right" style="height: 30px;margin-top: 45%" href="#myCarousel5"
+           data-slide="next">&rsaquo;</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-3">
+    <div class="col-xs-12" style="border-top: 1px solid orange">
+      <h4 style="margin-top: 50px;margin-bottom: 30px">应用</h4>
+
+      <div id="myCarousel6" class="carousel slide" style="padding-bottom: 50px">
+        <ol class="carousel-indicators bg-success">
+          <li data-target="#myCarousel6" data-slide-to="0" class="active"></li>
+          <li data-target="#myCarousel6" data-slide-to="1"></li>
+          <li data-target="#myCarousel6" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner" style="height: 300px">
+          <div class="item active" >
+            <h4>2017金米奖</h4>
+            <p >最优秀的应用和游戏</p>
+            <span></span>
+            <img src="img/yingyong1.png" style="width: 100%" alt="First slide">
+          </div>
+          <div class="item">
+            <h4>FOREST</h4>
+            <p >帮助您专心于生活中每个重要时刻！</p>
+            <span>免费</span>
+            <img src="img/yingyong2.png" style="width: 100%" alt="Second slide">
+          </div>
+          <div class="item">
+            <h4>小米应用</h4>
+            <p >小米出品 必属精品</p>
+            <span>免费</span>
+            <img src="img/yingyong3.png" style="width: 100%" alt="Third slide">
+          </div>
+        </div>
+        <a class="carousel-control left" style="height: 30px;margin-top: 45%" href="#myCarousel6"
+           data-slide="prev">&lsaquo;</a>
+        <a class="carousel-control right" style="height: 30px;margin-top: 45%" href="#myCarousel6"
+           data-slide="next">&rsaquo;</a>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<!--页脚-->
+<div class="container" style="margin-top: 20px">
+  <div class="row font text-center" style="margin: 15px">
+    <div class="col-xs-3"><a href="#"> <span class="glyphicon glyphicon-book"></span>预约维修服务</a></div>
+    <div class="col-xs-3"><a href="#"> <span class="glyphicon glyphicon-gift"></span>满150包邮</a></div>
+    <div class="col-xs-3"><a href="#"> <span class="glyphicon glyphicon-check"></span>货到付款</a></div>
+    <div class="col-xs-3"><a href="#"> <span class="glyphicon glyphicon-map-marker"></span>520余家售后网点</a></div>
+  </div>
+<div class="row">
+  <hr>
+</div>
+<div class="row">
+  <div class="col-xs-9">
+    <div class="row font" style="margin-bottom: 15px; ">
+      <div class="col-xs-3">帮助中心</div>
+      <div class="col-xs-3">账户管理</div>
+      <div class="col-xs-3">购物指南</div>
+      <div class="col-xs-3">订单操作</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">自助服务</div>
+      <div class="col-xs-3">相关下载</div>
+      <div class="col-xs-3">线下门店</div>
+      <div class="col-xs-3">小米之家</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">售后政策</div>
+      <div class="col-xs-3">服务网点</div>
+      <div class="col-xs-3">零售网点</div>
+      <div class="col-xs-3">关于小米</div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-3">自助服务</div>
+      <div class="col-xs-3">相关下载</div>
+      <div class="col-xs-3">线下门店</div>
+      <div class="col-xs-3">小米之家</div>
+    </div>
+  </div>
+
+  <div class="col-xs-3">
+    <p>400-100-5678</p>
+    <p>周一至周日 8:00-18:00
+      （仅收市话费）</p>
+    <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+      <span class="glyphicon glyphicon-phone-alt"></span>24在线客服</button>
+  </div>
+</div>
+</div>
+<!--/////////////////模态框////////////////////////////-->
+<div class="modal" id="myModal">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      模态框
+    </div>
+    <div class="modal-body">
+      <br>
+      无人服务
+      <br>
+      <br>
+      </div>
+    <div class="modal-footer">
+      <button class="btn-default" data-dismiss="modal">确定</button>
+      <button class="btn-primary" data-dismiss="modal">取消</button>
+    </div>
+  </div>
+</div>
+</div>
+<!--版权-->
+<div class="container" style="margin-top: 30px">
+  <div class="col-xs-8">
+    <div class="row">
+    <div class="col-xs-1" style="background-color: rgb(245,102,0)"><div class="logo"></div></div>
+  <div class="col-xs-11">小米商城|MIUI|米聊|多看书城|小米路由器|视频电话|小米天猫店|小米淘宝直营店|小米网盟|小米移动</div>
+<p class="col-xs-11">©mi.com 京ICP证110507号 京ICP备10046444号 京公网安备11010802020134号 京网文[2014]0059-0009号
+  违法和不良信息举报电话：185-0130-1238，本网站所列数据，所有数据均出自我司实验室测试</p>
+  </div>
+  </div>
+  <div class="col-xs-4">
+    <button> <span class="glyphicon glyphicon-bed"></span>诚信网站示范企业</button>
+    <button> <span class="glyphicon glyphicon-bed"></span>诚信网站示范企业</button>
+    <button> <span class="glyphicon glyphicon-bed"></span>诚信网站示范企业</button>
+    <button> <span class="glyphicon glyphicon-bed"></span>诚信网站示范企业</button>
+  </div>
+</div>
+</body>
+

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="../bootstrap.css" type="text/css">
+  <style>
+    .mt{
+      margin-top: 15px;
+    }
+    h3+ul{
+      font-size: 20px;
+    }
+    a:link{
+      text-decoration: none;
+    }
+  </style>
+  <script src="../jquery.js"></script>
+  <script src="../bootstrap.js"></script>
+  <script src="../js/dfrz-store.js"></script>
+  <script>
+
+    $(function(){
+      /*打印*/
+      function chushihua(){
+        var addresses=store.get('address',{});
+        $('#dizhi').empty();
+        var html='';
+        html+='  <div class="col-xs-4"><a href="#" data-toggle="modal" data-target="#myModal">'+
+          ' <div class="text-center" style="border: 1px solid #d5d5d5;background-color: white;">'+
+          ' <img src="img/tubiao1.png" alt=""><p style="margin-bottom: 50px">添加新地址</p>'+
+          '</div></a></div>';
+        for (var i= 0,len=addresses.length;i<len;i++){
+          html+='<div class="col-xs-4" data-id="'+i+'" style="height: 200px;">' +
+            '<div style="background-color: white;height: 170px;border: 1px solid #d5d5d5"><p>'+
+            addresses[i].name+'</p><p>'+ addresses[i].number+'</p><p>'+addresses[i].address+'</p><p>'+
+            addresses[i].deta+'('+ addresses[i].postcode+')</p>' +
+            '<button class="btn pull-right" data-name="modify" data-toggle="modal" data-target="#myModal">修改</button>' +
+            '<button class="btn pull-right" data-name="delete">删除</button></div></div>'
+        }
+        $('#dizhi').append(html);
+      }
+
+      chushihua();
+     //localStorage.clear();
+      $('nav').load('../main/nav.html');
+      $('footer').load('../main/footer.html');
+      var onoff=0;
+      $('#dizhi').on('click','[data-toggle=modal]',function(){
+        onoff=1;
+      })
+      $('#Save').on('click',function(){
+        var addresses=store.get('address',{});
+        console.log(addresses)
+        var address={
+          name:$('#name').val(),
+          number:$('#number').val(),
+          address:$('#address').val(),
+          deta:$('#deta').val(),
+          postcode:$('#postcode').val()
+        }
+        if(onoff==1){
+          addresses.push(address);
+        }else {
+          addresses.splice(id,1,address);
+        }
+        store.add('address',addresses);
+        chushihua();
+      })
+      /*删除*/
+      $('#dizhi').on('click','[data-name=delete]',function(){
+        var addresses=store.get('address',{});
+        var id=$(this).parents('.col-xs-4').data('id');
+        addresses.splice(id,1);
+        store.add('address',addresses);
+       chushihua();
+      })
+      var id;
+       $('#dizhi').on('click','[data-name=modify]',function(){
+         onoff=0;
+         var addresses=store.get('address',{});
+          id=$(this).parents('.col-xs-4').data('id');
+         $('#name').val(addresses[id].name);
+         $('#number').val(addresses[id].number);
+         $('#address').val(addresses[id].address);
+         $('#deta').val(addresses[id].deta);
+         $('#postcode').val(addresses[id].postcode);
+       })
+
+
+      $('#myModal').on('hidden.bs.modal',function(){
+        $(this).find('#name').val('姓名');
+        $('#number').val('手机号码');
+        $('#address').val('选择省/市/区/街道');
+        $('#deta').val('详细地址');
+        $('#postcode').val('邮政编码');
+         $('#label').val('地址标签')
+      });
+    });
+
+
+  </script>
+</head>
+<body>
+<nav></nav>
+<div class="container">
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="#">首页</a></li>
+      <li class="active">个人中心</li>
+    </ol>
+  </div>
+  <div class="container" style="background-color: rgb(245,245,245)">
+    <div class="row">
+      <div class="col-xs-3 mt" style="padding-bottom: 30px">
+        <div class="col-xs-12" style="background-color: white">
+          <h3>订单中心</h3>
+          <ul>
+            <li>我的订单</li>
+            <li>意外保</li>
+            <li>团购订单</li>
+            <li>评价晒单</li>
+            <li>话费充值订单</li>
+            <li>以旧换新订单</li>
+          </ul>
+          <h3 >个人中心</h3>
+          <ul>
+            <li><a href="../gerenzhongxin/gerenzhongxin.html">我的个人中心</a></li>
+            <li>消息通知</li>
+            <li>购买资格</li>
+            <li>现金账户</li>
+            <li>小米礼品卡</li>
+            <li>现金券</li>
+            <li>喜欢的商品</li>
+            <li>优惠券</li>
+            <li style="color: rgb(245,104,0)">收货地址</li>
+          </ul>
+          <h3>售后服务</h3>
+          <ul>
+            <li>服务记录</li>
+            <li>申请服务</li>
+            <li>领取快递报销</li>
+          </ul>
+          <h3>账户管理</h3>
+          <ul>
+            <li>个人信息</li>
+            <li>修改密码</li>
+            <li>社区VIP认证</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-xs-9">
+<div class="row">
+    <div class="col-xs-12 mt" style="background-color: white; padding-bottom:15px">
+      <h2>收货地址</h2>
+  </div>
+
+</div>
+        <div id="dizhi" class="row mt">
+
+
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--模态框-->
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        添加收货地址
+      </div>
+      <div class="modal-body">
+       <from>
+        <div class="row form-group">
+          <div class="col-xs-6"><input id="name" class="form-control" type="text" value="姓名"></div>
+          <div class="col-xs-6"><input id="number"  class="form-control" type="text" value="手机号"></div>
+        </div>
+         <div class="row form-group">
+           <div class="col-xs-12">
+             <input id="address" class="form-control" type="text" value="选择省/市/区/街道"></div>
+         </div>
+         <div class="row form-group">
+           <div class="col-xs-12"><input id="deta" class="form-control" type="text" value="详细地址"></div>
+         </div>
+         <div class="row form-group">
+           <div class="col-xs-6"><input id="postcode" class="form-control" type="text" value="邮政编码"></div>
+           <div class="col-xs-6"><input id="label" class="form-control" type="text" value="地址标签"></div>
+         </div>
+       </from>
+      </div>
+      <div class="modal-footer">
+        <button id="Save" class="btn-default" data-dismiss="modal">Save</button>
+        <button class="btn-primary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer></footer>
+</body>
+</html>

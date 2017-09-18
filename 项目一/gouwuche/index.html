@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>购物车</title>
+  <style>
+    table{
+      width: 100%;
+      border-collapse:collapse;
+      text-align: center;
+    }
+   th,td{
+  border: 1px solid black;
+     position: relative;
+     }
+    th>img{
+      cursor: pointer;
+      background-position: right center;
+      position: absolute;
+      right: 0px;
+    }
+    .check{
+      width: 80px;
+    }
+    .amount{
+      width: 150px;
+
+    }
+    .amount>input{
+      width: 50px;
+      text-align: center;
+    }
+    .amount>a{
+      cursor: pointer;
+      font-size: 20px;
+    }
+    .delete{
+      text-align: center;
+      width: 80px;
+    }
+    .name{
+      width: 100px;
+    }
+    .priceall{
+      text-align: center;
+    }
+    .price_th{
+      width: 100px;
+    }
+
+  </style>
+  <script src="../jquery.js"></script>
+  <script>
+$(function(){
+var date=[
+  {id:'1',pid:false,name:'电视',picture:'../main/img/dianshi2.png',price:'323'},
+  {id:'2',pid:false,name:'家电',picture:'../main/img/jiadian2.png',price:'344'},
+  {id:'3',pid:false,name:'红米4x',picture:'../main/img/hongmi4x.png',price:'378'},
+  {id:'4',pid:false,name:'盒子',picture:'../main/img/hezi4.png',price:'356'},
+  {id:'5',pid:false,name:'电视',picture:'../main/img/dianshi4.png',price:'397'},
+  {id:'6',pid:false,name:'平板',picture:'../main/img/jiadian5.jpg',price:'348'}];
+
+  function sum(array,fn){
+    var total = 0;
+    for(var i= 0, len = array.length; i < len ; i++){
+      if(typeof fn == 'function'){
+        total += fn(array[i]);}
+      else{
+        total += array[i];
+      }}
+    return total;
+  }
+  function prepareDate(arry){
+    for(var i= 0,len=arry.length;i<len;i++){
+      arry[i].number=0;
+     arry[i].subTotal=arry[i].price*arry[i].number;}}
+
+  function updateFoot(arry){
+var total=sum(arry,function(item){
+  return item.subTotal;})
+$('tfoot td:nth-child(3)').text(total);}
+
+  function pick(arrty){
+    var arrPick=[];
+    for (var i= 0,len=date.length;i<len;i++){
+      if(arrty[i].pid==true){
+        arrPick.push(arrty[i]);
+      }}
+    return arrPick;
+  }
+  function jiancha(){
+    var len=$('td input[type=checkbox]:checked').length;
+    if(len==date.length){
+      $('#all').prop('checked',true);
+    }
+    if(len!=date.length){
+      $('#all').prop('checked',false);
+    }};
+  //////////////////数据////////////////////////////////
+  var $tbody=$('tbody');
+  var $tfoot=$('tfoot');
+  var priceall='';
+  var total=0;
+  function stamp(){
+  var html='';
+  for(var i=0;i<date.length;i++){
+    if(date[i].pid){
+      html+=' <tr data-sort='+date[i].id+'> <td data-sort="'+i+'"><input type="checkbox" checked="checked"></td> <td class="name">'+
+        date[i].name+'</td><td><img src="'+
+        date[i].picture+'" alt=""></td><td><p class="price">'+
+        date[i].price+'</p></td><td class="amount"><a class="dec">' +
+        '<b>-</b></a><input class="input_price" type="text" value="'+
+        date[i].number+'"><a class="add"><b>+</b></a></td><td><p class="priceall">'+
+        date[i].subTotal+'</p></td><td class="delete"><a href="#">删除</a></td></tr>';
+    }else {
+      html+=' <tr data-sort='+ date[i].id+'> <td data-sort="'+i+'"><input type="checkbox"></td> <td class="name">'+
+        date[i].name+'</td><td><img src="'+
+        date[i].picture+'" alt=""></td><td><p class="price">'+
+        date[i].price+'</p></td><td class="amount"><a class="dec">' +
+        '<b>-</b></a><input class="input_price" type="text" value="'+
+        date[i].number+'"><a class="add"><b>+</b></a></td><td><p class="priceall">'+
+        date[i].subTotal+'</p></td><td class="delete"><a href="#">删除</a></td></tr>';
+    }
+  }
+    $tbody.append(html);
+  }
+  prepareDate(date);
+  stamp();
+  updateFoot(pick(date));
+  ///////////////////////////打印数据//////////////////////////
+
+  $tbody.on('change','input[type=checkbox]', function(){
+    $b=$(this).parents('tr').children('td').data('sort');
+   date[$b].pid=!date[$b].pid;
+    updateFoot(pick(date));
+    jiancha();
+  })
+  var $all=$('#all');
+  $all.on('click',function(){
+    var $check=$('td input[type=checkbox]:checked');
+    if($(this).prop('checked')){
+     $check.trigger('click');
+    $('td input[type=checkbox]').trigger('click');
+    }else {
+      $('td input[type=checkbox]').trigger('click');
+    }
+  })
+////////////////////////////////checkbox////////////////////////
+  $tbody.on('click','.delete a ', function(){
+    var id=$(this).parents('tr').data('sort');
+    $(this).parent().parent().remove();
+    for(var i= 0,len=date.length;i<len;i++){
+      if(date[i].id==id){
+        date.splice(i,1);
+        updateFoot(date);
+        break;
+       }}
+    //$tbody.children().remove();
+   //stamp();
+    jiancha();
+    return false;
+  })
+  $tfoot.on('click','#delete_all',function(){
+     date=[];
+    updateFoot(date);
+    $('.delete a').parents('tr').remove();
+    return false;
+  })
+
+  $tfoot.on('click','.delete_select',function(){
+    $tbody.children().each(function (index,item) {
+      var $tr = $(item);
+      if($tr.find('input[type=checkbox]').prop('checked')){
+        $tr.find('a').trigger('click');
+      }
+    });
+
+    /*var $select=$('td input[type=checkbox]:checked');
+    if($tbody.find($select)){
+      $select.parents('tr').find('a').trigger('click');}
+    return false;*/
+  })
+  /////////////////////////////delete/////////////////////////
+  var $dec=$('.dec');
+  var $price=$('.price');
+  var $input=$('.input_price');
+  var old=0;
+
+  $tbody.on('click','.add',function(){
+    var $number=$(this).prev().val();
+    $(this).prev().val(++$number).trigger('change');
+  })
+  $tbody.on('click','.dec',function(){
+    var $number=$(this).next().val();
+    if($number!=0){
+    $(this).next().val(--$number).trigger('change');}
+  })
+  $tbody.on('change','input[type=text]',function(){
+    var $number=$(this).val();
+    var id=$(this).parents('tr').data('sort');
+    var result=date.find(function(item){
+      return item.id==id;
+    })
+    result.number=$number;
+    result.subTotal=result.price*result.number;
+    $(this).parents('tr').find('.priceall').text(result.subTotal);
+    updateFoot(pick(date));
+  })
+
+  //////////////////////////////amount And price///////////////////////
+
+var obtn=$('#paixu');    //点击排序
+  var onOff=true;         //定义一个开关
+  obtn.click(function(){      //点击事件
+    if(onOff){                //判断开关的状态 ，为真顺序排列
+    function compare(property){     //排序的函数
+      return function(a,b){
+        var value1 = a[property];
+        var value2 = b[property];
+        return value1 - value2;
+      }}
+      obtn.attr('src','images/sort_asc.png'); //改变图标的样子
+      onOff=!onOff;                   //开关 变化
+    }else {                             //为假逆序排列
+      function compare(property){
+        return function(a,b){
+          var value1 = a[property];
+          var value2 = b[property];
+          return value2 - value1;
+        }}
+      obtn.attr('src','images/sort_desc.png');//改变图标的样子
+      onOff=!onOff;
+    }
+    date.sort(compare('price'));             //排列后的数据
+    $tbody.children().remove(); //移除之前的表格
+    stamp();       //打印新的表格
+    /*for (var i,len=date.length;i<len;i++){
+    if(date[i].pid==true){
+
+    } }*/
+  })
+  /////////////////////////////排序/////////////////////////
+})
+  </script>
+</head>
+<body>
+<!--
+购物车中的商品含以下数据：id、图片、名称、关键字、规格、数量、单价。
+单击列标题能升序和降序排列，第一列、第二列和最后一列不参与排序，第一列放checkbox实现全选功能。
+表格第一列放checkbox，显示图片、名称+关键字、规格、数量、单价和合计。
+最右边单元格放删除链接。
+数量可点击+和-,也可以直接输入数据只能输数字
+表格底部放全选，删除，选中商品的总数量和总价
+选中的商品可一次性删除
+-->
+
+<table id="car">
+  <thead>
+  <tr>
+    <th class="check"><input type="checkbox" id="all"> 全选</th>
+    <th>名称</th>
+    <th>图片</th>
+    <th class="price_th">单价 <img src="images/sort_both.png" id="paixu" alt=""></th>
+    <th>数量</th>
+    <th>合计</th>
+    <th>操作</th>
+  </tr>
+  </thead>
+  <tbody></tbody>
+  <tfoot>
+  <tr style="height: 50px;" >
+    <td colspan="3" ><a href="" class="delete_select">删除选中的物品</a></td>
+    <td>总价:</td>
+    <td ><p id="total"></p></td>
+    <td colspan="2"><a href="#" id="delete_all">全部删除</a></td>
+  </tr>
+  </tfoot>
+
+
+</table>
+</body>
+</html>

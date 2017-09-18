@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" href="../bootstrap.css">
+  <style>
+    .mt{
+      margin-top:30px;
+    }
+    .bgtp{
+      background: url("img/banner.jpg") no-repeat top center;
+      height: 588px;
+    }
+    a:hover{
+      color: rgb(245,102,0) ;
+    }
+    a:link{
+      text-decoration: none;
+
+    }
+  </style>
+  <script src="../jquery.js"></script>
+  <script src="../bootstrap.js"></script>
+  <script src="../js/dfrz-store.js"></script>
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-1 mt"  ><img src="img/mi.png" alt=""></div>
+  <div class="col-xs-4">
+    <h2>小米商城</h2>
+    <p>让每个人都能享受科技乐趣</p>
+  </div>
+  </div>
+  <div style="background-color: #16232C;margin-left: -100px;margin-right: -100px">
+    <div class="bgtp">
+      <div class="col-xs-4 col-xs-offset-7 mt" style="background-color: white">
+        <div class="form-group text-center">
+<div class="row mt">
+  <a href="#" style="font-size: 30px;border-right:2px solid #d4d4d4;padding-right: 20px;color: rgb(245,102,0)">账号登陆</a>
+  <a href="#" style="font-size: 30px;padding-left: 20px" >扫码登陆</a>
+</div>
+        <div class="row mt">
+          <input id="user" type="text" class="input-lg" style="border-radius: 0px;" value="邮箱/手机号码/账号">
+        </div>
+<div class="row mt">
+  <input type="text" id="password" class="input-lg" style="border-radius: 0px;" value="密码">
+</div>
+          <div class="row mt">
+            <button id="login" class="btn btn-warning btn-lg" style="width:250px">立即登陆</button>
+          </div>
+          <div class="row mt">
+            <a href="../zhuce/01.html">注册小米账号</a>
+            <a href="">忘记密码</a>
+          </div>
+          <div class="row mt">其他方式登陆</div>
+      </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt text-center">
+<div class="row mt">
+  <div class="col-xs-12">简体| 繁体| English| 常见问题</div>
+</div>
+    <div class="row">
+      <div class="col-xs-12">小米公司版权所有-京ICP备10046444-京公网安备11010802020134号-京ICP证110507号</div>
+    </div>
+  </div>
+  </div>
+</body>
+<script>
+  var user = store.get('user',{});
+  $(function(){
+
+    $('#login').on('click',function(){
+      if( $('#user').val()==user.phone&&$('#password').val()==user.password){
+        user.isLogin = true;
+        store.updata('user',user);
+        location.href='../main/02.html'
+      }else {
+        alert('密码错误');
+      }
+
+    });
+  });
+</script>
+</html>
